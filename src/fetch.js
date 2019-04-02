@@ -1,6 +1,11 @@
-import { getAccessToken, allReviews, allBottomlines } from './yotpo'
+import {
+  getAccessToken,
+  allReviewsWithMeta,
+  allReviews,
+  allBottomlines
+} from './yotpo'
 
-export default async ({ appKey, appSecret }) => {
+export default async ({ appKey, appSecret, meta }) => {
   console.time(`Fetch Yotpo reviews`)
   console.log(`Starting to fetch reviews from Yotpo`)
 
@@ -9,7 +14,9 @@ export default async ({ appKey, appSecret }) => {
     appSecret,
   })
 
-  const reviews = await pagedGet(allReviews, {
+  const reviewQuery = meta ? allReviewsWithMeta : allReviews
+
+  const reviews = await pagedGet(reviewQuery, {
     appKey,
     accessToken,
   })

@@ -18,9 +18,11 @@ export const sourceNodes = async (
     process.exit(1)
   }
 
+
   const { reviews, bottomlines } = await fetchData({
     appKey: pluginOptions.appKey,
     appSecret: pluginOptions.appSecret,
+    meta: pluginOptions.meta || false
   })
 
   await Promise.all(
@@ -47,6 +49,7 @@ export const sourceNodes = async (
         reviewerType: review.reviewer_type,
         createdAt: review.created_at,
         updatedAt: review.updated_at,
+        meta: review.meta
       }
 
       const node = await Node(data)
